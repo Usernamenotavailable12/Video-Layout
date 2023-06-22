@@ -1,16 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const videos = document.querySelectorAll('.video-wrapper video');
+    // assume only one video is playing at a time
+var videoPlaying = null;
 
-  videos.forEach(function(video) {
-    // Pause other videos when a video is played
-    video.addEventListener('play', function(event) {
-      const currentVideo = event.target;
+const onPlay = function() {
+  if (videoPlaying && videoPlaying != this) {
+    videoPlaying.pause()
+  }
+  videoPlaying = this
+}
 
-      videos.forEach(function(video) {
-        if (video !== currentVideo) {
-          video.pause();
-        }
-      });
-    });
-  });
-});
+// init event handler
+const videos = document.getElementsByClassName("video-pause-func")
+for (let i = 0; i < videos.length; i++) {
+  videos[i].addEventListener("play", onPlay)
+} 
